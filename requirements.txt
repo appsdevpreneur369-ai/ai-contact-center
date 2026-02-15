@@ -1,0 +1,6 @@
+fastapi uvicorn[standard] sqlalchemy asyncpg psycopg2-binary redis aioredis pydantic python-dotenv openai alembic
+
+SQLAlchemy~=2.0.46
+fastapi~=0.129.0
+openai~=2.21.0
+python-dotenv~=1.2.1

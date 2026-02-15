@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# Virtual environment
+venv/
+
+# Uploaded audio files
+uploads/
+
+# OS files
+.DS_Store
+Thumbs.db
