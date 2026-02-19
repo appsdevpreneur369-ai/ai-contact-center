@@ -2,6 +2,8 @@ from fastapi import APIRouter, UploadFile, File
 import shutil
 import os
 from app.services.whisper_service import WhisperService
+from fastapi.responses import FileResponse
+from app.services.tts_service import text_to_speech
 
 router = APIRouter()
 
@@ -24,3 +26,8 @@ async def transcribe_audio(file: UploadFile = File(...)):
         "filename": file.filename,
         "transcript": transcript
     }
+
+@router.post("/tts")
+async def generate_tts(text: str):
+    audio_path = text_to_speech(text)
+    return FileResponse(audio_path, media_type="audio/mpeg")

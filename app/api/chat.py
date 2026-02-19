@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 from app.services.memory_service import MemoryService
 from app.services.llm_service import LLMService
+from app.services.tts_service import text_to_speech
 
 router = APIRouter()
 
@@ -33,7 +34,13 @@ async def chat(payload: ChatRequest):
     # 4️⃣ Save assistant message
     await memory_service.save_message(session_id, "assistant", response)
 
-    return {"response": response}
+    # 5️⃣ Convert LLM response to speech
+    audio_filename = text_to_speech(response)
+
+    return {
+        "response": response,
+        "audio_url": f"/audio/{audio_filename}"
+    }
 
 
 @router.get("/chat/{session_id}")
