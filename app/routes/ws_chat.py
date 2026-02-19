@@ -23,7 +23,8 @@ async def websocket_chat(websocket: WebSocket):
             user_message = payload["message"]
 
             await memory_service.save_message(session_id, "user", user_message)
-            history = await memory_service.get_history(session_id)
+            # history = await memory_service.get_history(session_id)
+            history = await memory_service.get_trimmed_history(session_id)
 
             full_response = ""
 

@@ -4,6 +4,7 @@ from app.db.database import AsyncSessionLocal
 
 
 class MemoryService:
+    MAX_CONTEXT_MESSAGES = 10  # configurable
 
     async def save_message(self, session_id: str, role: str, content: str):
         async with AsyncSessionLocal() as session:
@@ -52,3 +53,12 @@ class MemoryService:
                 }
                 for r in records
             ]
+
+    async def get_trimmed_history(self, session_id: str):
+        history = await self.get_history(session_id)
+
+        # Keep only last N messages (recent context)
+        if len(history) > self.MAX_CONTEXT_MESSAGES:
+            history = history[-self.MAX_CONTEXT_MESSAGES:]
+
+        return history

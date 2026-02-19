@@ -26,7 +26,8 @@ async def chat(payload: ChatRequest):
     await memory_service.save_message(session_id, "user", user_message)
 
     # 2️⃣ Fetch history
-    history = await memory_service.get_history(session_id)
+    # //history = await memory_service.get_history(session_id)
+    history = await memory_service.get_trimmed_history(session_id)
 
     # 3️⃣ Generate LLM response
     response = await llm_service.generate_response(history)
@@ -46,7 +47,8 @@ async def chat(payload: ChatRequest):
 @router.get("/chat/{session_id}")
 async def get_chat(session_id: str):
 
-    history = await memory_service.get_history(session_id)
+    # history = await memory_service.get_history(session_id)
+    history = await memory_service.get_trimmed_history(session_id)
 
     return {
         "status": "OK",
